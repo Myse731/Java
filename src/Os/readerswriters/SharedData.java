@@ -18,8 +18,10 @@ class SharedData {
         String name = Thread.currentThread().getName();
 
         // TODO 1: 읽기 전 (4줄) — 첫 번째 읽기라면 쓰기를 막기
-
-
+        wait(mutex);
+        readcount++;
+        if(readcount == 1) wait(wrt);
+        signal(mutex);
 
         // 읽기 수행
         System.out.println(name + ": 읽기 시작  data=" + data + "  (읽는 중 " + reading.incrementAndGet() + "명)");
@@ -27,7 +29,10 @@ class SharedData {
         reading.decrementAndGet();
 
         // TODO 2: 읽은 후 (4줄) — 마지막 읽기라면 쓰기를 허용하기
-
+        wait(mutex);
+        readcount--;
+        if(readcount == 0) signal(wrt);
+        signal(mutex);
 
     }
 
