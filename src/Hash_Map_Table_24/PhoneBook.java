@@ -1,4 +1,4 @@
-package Hash_Map_Table;
+package Hash_Map_Table_24;
 import java.util.*;
 
 public class PhoneBook {
